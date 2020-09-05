@@ -122,7 +122,7 @@
                 <div class="fl key">{{f.k}}</div>
                 <div class="fl value">
                     <ul class="type-list">
-                        <li v-for="(option, j) in f.options" :key="j">
+                        <li v-for="(option, j) in f.options" :key="j" @click="selectFilter(f.k, option)" >
                             <a>{{option.name}}</a>
                         </li>
                     </ul>
@@ -133,11 +133,11 @@
                 <div class="fl key brand">{{f.k}}</div>
                 <div class="value logos">
                     <ul class="logo-list">
-                        <li v-for="(option, j) in f.options" v-if="option.image">
+                        <li v-for="(option, j) in f.options" v-if="option.image" @click="selectFilter(f.k, option)">
                             <img :src="option.image" />
                         </li>
                         
-                        <li style="text-align: center" v-else>
+                        <li style="text-align: center" v-else @click="selectFilter(f.k, option)">
                             <a style="line-height: 30px; font-size: 12px" href="#">{{option.name}}</a>
                         </li>
                     </ul>
@@ -450,7 +450,8 @@
             ly,
             search: {
                 key: "",
-                page: 1 // 当前页码
+                page: 1, // 当前页码
+                filter: {}, // 要发到后台的数据
             },
             goodsList: [],
             total: 0, // 总条数
@@ -470,6 +471,8 @@
             search.sortBy = search.sortBy || "";
             // 对排序方式初始化，转为布尔值
             search.descending = search.descending == "true" || false;
+            // 对过滤对象进行初始化
+            search.filter = search.filter || {}
 
             this.search = search;
             // 加载数据
@@ -552,6 +555,16 @@
                 if(this.search.page < this.totalPage){
                     this.search.page++
                 }
+            },
+            selectFilter(k, o) {
+                console.log('%c 点击了搜索条件', 'color:red')
+                const obj = {};
+                Object.assign(obj, this.search)
+                if (k == '分类' || k == '品牌') {
+                    o = o.id
+                } 
+                obj.filter[k] = o.name || o;
+                this.search = obj
             }
         },
         components:{
