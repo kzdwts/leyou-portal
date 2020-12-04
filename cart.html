@@ -334,6 +334,11 @@
                 // 判断是否登录
                 ly.verify().then((res) => {
                     // 已登录
+                    // 从购物车获取数据
+                    ly.http.get("/cart").then(({data}) => {
+                        this.carts = data;
+                        this.selected = this.carts;
+                    });
 
                 }).catch(() => {
                     // 未登录

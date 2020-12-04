@@ -547,6 +547,12 @@ const ly = leyou = {
         }
     },
     /**
+     * 判断用户是否登录
+     */
+    verify() {
+        return ly.http.get("/auth/verify");
+    },
+    /**
      * 将整数价格变为小数
      * @param val
      * @returns {*}
