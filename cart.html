@@ -302,6 +302,9 @@
                 // 判断是否登录
                 ly.verify().then((res) => {
                     // 已登录
+                    ly.http.put("/cart", {skuId: c.skuId, num: c.num}).then((res) => {
+                        console.log('decr cart success')
+                    });
 
                 }).catch(() => {
                     // 未登录
@@ -313,6 +316,9 @@
                 // 判断是否登录
                 ly.verify().then((res) => {
                     // 已登录
+                    ly.http.put("/cart", {skuId: c.skuId, num: c.num}).then((res) => {
+                        console.log('incr cart success')
+                    });
 
                 }).catch(() => {
                     // 未登录
@@ -323,6 +329,9 @@
                 // 判断是否登录
                 ly.verify().then((res) => {
                     // 已登录
+                    ly.http.delete("/cart/" + this.carts[i].skuId).then((res) => {
+                        console.log('delete cart success')
+                    })
 
                 }).catch(() => {
                     // 未登录
