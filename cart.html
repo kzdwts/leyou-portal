@@ -94,7 +94,7 @@
                         <span><em>已节省：</em><i>-¥20.00</i></span>
                     </div>
                     <div class="sumbtn">
-                        <a class="sum-btn"  href="getOrderInfo.html"  target="_blank">结算</a>
+                        <a class="sum-btn"  href="javascript:void(0);" @click="toOrder()">结算</a>
                     </div>
                 </div>
             </div>
@@ -331,6 +331,7 @@
                     // 已登录
                     ly.http.delete("/cart/" + this.carts[i].skuId).then((res) => {
                         console.log('delete cart success')
+                        this.loadCarts()
                     })
 
                 }).catch(() => {
@@ -353,6 +354,16 @@
                     // 未登录
                     this.carts = ly.store.get('LY_CART') || [];
                     this.selected = this.carts;
+                });
+            },
+            toOrder() {
+                // 判断是否登录
+                ly.verify().then(() => {
+                    // 存入localStorage
+                    ly.store.set("LY_SELECTED", this.selected)
+                    window.location = 'http://www.leyou.com/getOrderInfo.html'
+                }).catch(() => {
+                    window.location = 'http://www.leyou.com/login.html?returnUrl=http://www.leyou.com/cart.html'
                 });
             }
         },
