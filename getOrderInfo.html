@@ -298,7 +298,7 @@
 										return data;
 									}
 								]
-						}).then((res) => {
+						}).then(({data}) => {
 							window.location = 'http://www.leyou.com/pay.html?orderId=' + data
 						}).catch(() => {
 							alert('订单提交失败，可能是缺货')
